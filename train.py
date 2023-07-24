@@ -138,14 +138,16 @@ def train_model(
                             if not (torch.isinf(value.grad) | torch.isnan(value.grad)).any():
                                 histograms['Gradients/' + tag] = wandb.Histogram(value.grad.data.cpu())
 
-                        val_score = evaluate(model, val_loader, device, amp)
+                        val_score, accuracy = evaluate(model, val_loader, device, amp)
                         scheduler.step(val_score)
+                        scheduler.step(accuracy)
 
                         logging.info('Validation Dice score: {}'.format(val_score))
                         try:
                             experiment.log({
                                 'learning rate': optimizer.param_groups[0]['lr'],
                                 'validation Dice': val_score,
+                                'validation accuracy': accuracy,
                                 'images': wandb.Image(images[0].cpu()),
                                 'masks': {
                                     'true': wandb.Image(true_masks[0].float().cpu()),
