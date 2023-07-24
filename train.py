@@ -142,9 +142,8 @@ def train_model(
                         scheduler.step(val_score)
                         scheduler.step(accuracy)
                         scheduler.step(recall)
-                        scheduler.step(persition)
 
-                        logging.info('\nValidation Dice score: {}\nAccuracy: {}\nRecall: {}\nPersition: {}'.format(val_score, accuracy, recall, persition))
+                        logging.info('\nValidation Dice score: {}\nAccuracy: {}\nRecall: {}'.format(val_score, accuracy, recall))
                         try:
                             experiment.log({
                                 'learning rate': optimizer.param_groups[0]['lr'],
