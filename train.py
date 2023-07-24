@@ -142,7 +142,7 @@ def train_model(
                         scheduler.step(val_score)
                         scheduler.step(accuracy)
 
-                        logging.info('Validation Dice score: {}'.format(val_score))
+                        logging.info('Validation Dice score: {}\nAccuracy: {}'.format(val_score, accuracy))
                         try:
                             experiment.log({
                                 'learning rate': optimizer.param_groups[0]['lr'],
