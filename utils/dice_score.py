@@ -1,29 +1,6 @@
 import torch
 from torch import Tensor
 
-def precision(input: torch.Tensor, target: torch.Tensor, reduce_batch_first: bool = False, epsilon: float = 1e-6):
-    assert input.size() == target.size()
-    assert input.dim() == 3 or not reduce_batch_first
-
-    sum_dim = (-1, -2) if input.dim() == 2 or not reduce_batch_first else (-1, -2, -3)
-
-    true_positives = (input * target).sum(dim=sum_dim)
-    predicted_positives = input.sum(dim=sum_dim)
-
-    precision = (true_positives + epsilon) / (predicted_positives + epsilon)
-    return precision.mean()
-
-def recall(input: torch.Tensor, target: torch.Tensor, reduce_batch_first: bool = False, epsilon: float = 1e-6):
-    assert input.size() == target.size()
-    assert input.dim() == 3 or not reduce_batch_first
-
-    sum_dim = (-1, -2) if input.dim() == 2 or not reduce_batch_first else (-1, -2, -3)
-
-    true_positives = (input * target).sum(dim=sum_dim)
-    actual_positives = target.sum(dim=sum_dim)
-
-    recall = (true_positives + epsilon) / (actual_positives + epsilon)
-    return recall.mean()
 
 def dice_coeff(input: Tensor, target: Tensor, reduce_batch_first: bool = False, epsilon: float = 1e-6):
     # Average of Dice coefficient for all batches, or for a single mask
