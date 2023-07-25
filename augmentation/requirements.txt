@@ -1,0 +1,5 @@
+numpy
+albumentations
+opencv-python
+matplotlib
+pillow
